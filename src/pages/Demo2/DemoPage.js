@@ -13,8 +13,8 @@ class DemoPage extends PureComponent {
       <PageHeaderWrapper>
         <Card title='本页面为路由及i18N的介绍页面'>
           <div>
-            FoxONE 的 Admin 采用了 <a href='https://pro.ant.design/index-cn'>Ant Design Pro</a>
-            体系，路由和i18N国际化均通过 <a href='https://umijs.org/zh/guide/router.html'>Umi.js</a>{' '}
+            FoxONE 的 Admin 采用了 <a href='https://pro.ant.design/index-cn'>Ant Design Pro</a>{' '}
+            体系，路由和 i18N 国际化均通过 <a href='https://umijs.org/zh/guide/router.html'>Umi.js</a>{' '}
             来管理，遵照文档规范即可
           </div>
           <Divider />
