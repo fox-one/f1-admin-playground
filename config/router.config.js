@@ -12,14 +12,6 @@ export default [
         path: '/admin/login',
         component: './Account/Login',
       },
-      {
-        path: '/admin/register',
-        component: './Account/Register',
-      },
-      {
-        path: '/admin/registerconfirm',
-        component: './Account/RegisterConfirm',
-      },
     ],
   },
   {

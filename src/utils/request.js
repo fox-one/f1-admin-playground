@@ -53,12 +53,17 @@ const regexSt = new RegExp('^https://[a-zA-Z0-9.-]*/');
 async function signAndRequest(session, url, options) {
   let host = url.match(regexSt)[0];
   host = host.substring(0, host.length - 1);
-
+  
   const pathAndQuery = url.replace(regexSt, '/');
-  const signData = generateSignRequest(options.method.toLowerCase(), pathAndQuery);
-  const token = await generateToken(session.key, session.secret, signData.sign);
+  console.log('session',session)
+  console.log('host',host)
+  console.log('pathAndQuery',pathAndQuery)
+  console.log('options',options)
+  const signData = generateSignRequest({ method: options.method, url: pathAndQuery });
+  console.log('signData',signData)
+  const token = await generateToken({ key: session.key, secrect: session.secret, requestSign: signData.sign });
   const finalUrl = `${host}${signData.uri}`;
-
+  console.log(finalUrl)
   const headers = {
     ...options.headers,
     Authorization: `Bearer ${token}`,
@@ -73,6 +78,7 @@ async function signAndRequest(session, url, options) {
 
 export function handleRequestError(e) {
   const status = e.name;
+  console.log(e)
   if (status === 'TypeError') {
     const error = new Error('服务不可用');
     error.name = '服务不可用，服务器暂时过载或正在维护。';

@@ -5,7 +5,7 @@ import Login from '@/components/Login';
 import Link from 'umi/link';
 import styles from './Login.less';
 
-const { Mobile, Password, Submit, Tab, Mail } = Login;
+const { Password, Submit, UserName } = Login;
 
 @connect(({ login, loading }) => ({
   login,
@@ -54,28 +54,14 @@ class LoginPage extends Component {
           ref={loginForm => {
             this.loginForm = loginForm;
           }}>
-          <Tab key='mobile' tab={formatMessage({ id: 'app.login.message.mobile' })}>
-            <Mobile name='mobile' placeholder={formatMessage({ id: 'app.login.message.mobile' })} />
+            <UserName name='username' placeholder={formatMessage({ id: 'app.login.message.username' })} />
             <Password
               name='password'
               placeholder={formatMessage({ id: 'app.login.message.password' })}
               onPressEnter={() => this.loginForm.validateFields(this.handleSubmit)} />
-          </Tab>
-          <Tab key='email' tab={formatMessage({ id: 'app.login.message.email' })}>
-            <Mail name='email' placeholder={formatMessage({ id: 'app.login.message.email' })} />
-            <Password
-              name='password'
-              placeholder={formatMessage({ id: 'app.login.message.password' })}
-              onPressEnter={() => this.loginForm.validateFields(this.handleSubmit)} />
-          </Tab>
           <Submit loading={submitting}>
             <FormattedMessage id='app.login.login' />
           </Submit>
-          <div className={styles.other}>
-            <Link className={styles.register} to='/admin/register'>
-              <FormattedMessage id='app.login.signup' />
-            </Link>
-          </div>
         </Login>
       </div>
     );

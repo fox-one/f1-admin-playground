@@ -3,10 +3,9 @@ import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import { Card, Divider } from 'antd';
 import { connect } from 'dva';
 
-@connect(({ login, assets, loading }) => ({
+@connect(({ assets, loading }) => ({
   assets,
-  login,
-  loading: loading.effects['login/getAccount'],
+  loading: loading.effects['assets/fetchAssets'],
 }))
 class Child1Page extends PureComponent {
   constructor() {
@@ -14,19 +13,19 @@ class Child1Page extends PureComponent {
     this.state = {};
   }
 
-  componentDidMount() {
-    const { dispatch } = this.props;
+  componentDidMount(){
+    const { dispatch } = this.props
     dispatch({
-      type: 'login/getAccount',
-      payload: null,
-    });
+      type:'assets/fetchAssets'
+    })
   }
 
   render() {
     const {
       loading,
-      login: { user },
+      assets: { assets },
     } = this.props;
+    console.log(assets)
     return (
       <PageHeaderWrapper>
         <Card title='本页面为数据获取的介绍页面'>
@@ -71,14 +70,14 @@ class Child1Page extends PureComponent {
           <p>数据是否在加载中可以通过注入 loading 对象，使用 loading.effects[] 检测数据是否在加载中</p>
         </Card>
         <Card loading={loading} style={{ marginTop: 20 }}>
-          <p>user.name: {user.name}</p>
-          {user.email ? <p>user.email: {user.email}</p> : null}
-          {user.phone_number ? (
+          {/* <p>admin.name: {admin.name}</p>
+          {admin.email ? <p>admin.email: {admin.email}</p> : null}
+          {admin.phone_number ? (
             <p>
-              user.mobile: {user.phone_code} {user.phone_number}
+              admin.mobile: {admin.phone_code} {admin.phone_number}
             </p>
           ) : null}
-          <p>user.created_at: {new Date(user.created_at * 1000).toLocaleDateString()}</p>
+          <p>admin.created_at: {new Date(admin.created_at * 1000).toLocaleDateString()}</p> */}
         </Card>
       </PageHeaderWrapper>
     );

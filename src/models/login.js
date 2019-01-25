@@ -12,29 +12,22 @@ export default {
 
   state: {
     status: undefined,
-    email: '',
-    mobile: '',
-    user: {},
+    username: '',
+    admin: {},
   },
 
   effects: {
     *login({ payload }, { call, put }) {
-      const { password: rawPassword, mobile, email } = payload;
+      const { password: rawPassword, username } = payload;
 
-      if (mobile) {
+      if (username) {
         yield put({
-          type: 'updateMobile',
-          payload: mobile,
-        });
-      }
-      if (email) {
-        yield put({
-          type: 'updateEmail',
-          payload: email,
+          type: 'updateUsername',
+          payload: username,
         });
       }
 
-      const response = yield call(accountLogin, { password: rawPassword, mobile, email });
+      const response = yield call(accountLogin, { password: rawPassword, username});
       if (!response) {
         yield put({
           type: 'changeLoginStatus',
@@ -83,14 +76,6 @@ export default {
       }
     },
 
-    *getAccount(_, { call, put }) {
-      const response = yield call(getAccountInfo, null);
-      yield put({
-        type: 'updateUserInfo',
-        payload: response,
-      });
-    },
-
     *logout(_, { put }) {
       yield put({
         type: 'changeLoginStatus',
@@ -120,7 +105,7 @@ export default {
     updateUserInfo(state, { payload }) {
       return {
         ...state,
-        user: payload.user,
+        admin: payload.admin,
       };
     },
     changeLoginStatus(state, { payload }) {
@@ -133,16 +118,10 @@ export default {
         type: payload.type,
       };
     },
-    updateMobile(state, { payload }) {
+    updateUsername(state, { payload }) {
       return {
         ...state,
-        mobile: payload,
-      };
-    },
-    updateEmail(state, { payload }) {
-      return {
-        ...state,
-        email: payload,
+        username: payload,
       };
     },
     updateSuccessHandler(state) {

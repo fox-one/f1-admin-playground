@@ -13,13 +13,6 @@ class Child2Page extends PureComponent {
     this.state = {};
   }
 
-  componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'login/getAccount',
-    });
-  }
-
   render() {
     return (
       <PageHeaderWrapper>

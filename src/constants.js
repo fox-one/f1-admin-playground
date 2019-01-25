@@ -2,7 +2,7 @@ const f1ex = 'f1ex.svg';
 
 const constants = {
   // dev
-  passportHost: 'https://dev-cloud.fox.one',
+  adminHost: 'https://dev-gateway.fox.one',
   storage: {
     authority: 'f1ex-admin-authority',
     session: 'f1ex-admin-token',
