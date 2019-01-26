@@ -53,10 +53,9 @@ const regexSt = new RegExp('^https://[a-zA-Z0-9.-]*/');
 async function signAndRequest(session, url, options) {
   let host = url.match(regexSt)[0];
   host = host.substring(0, host.length - 1);
-  
-  const pathAndQuery = url.replace(regexSt, '/');
 
-  const signData = generateSignRequest({ method: options.method, url: pathAndQuery });
+  const pathAndQuery = url.replace(regexSt, '/');
+  const signData = generateSignRequest({ method: options.method, url: pathAndQuery, body: options.body });
   const token = await generateToken({ key: session.key, secret: session.secret, requestSign: signData.sign });
   const finalUrl = `${host}${signData.uri}`;
   const headers = {
@@ -65,10 +64,11 @@ async function signAndRequest(session, url, options) {
   };
   const newOptions = {
     ...options,
-    method: options.method.toLowerCase(),
+    method: options.method,
+    body: JSON.stringify(signData.body),
     headers,
   };
-  return fetch(finalUrl, newOptions);
+  return window.fetch(finalUrl, newOptions);
 }
 
 export function handleRequestError(e) {
@@ -156,7 +156,6 @@ export default async function request(url, option) {
         'Content-Type': 'application/json; charset=utf-8',
         ...newOptions.headers,
       };
-      newOptions.body = JSON.stringify(newOptions.body);
     } else {
       // newOptions.body is FormData
       newOptions.headers = {
@@ -195,6 +194,9 @@ export default async function request(url, option) {
   if (session) {
     fetchRequest = signAndRequest(session, urlCopy, newOptions);
   } else {
+    if (newOptions.body) {
+      newOptions.body = JSON.stringify(newOptions.body);
+    }
     fetchRequest = fetch(urlCopy, newOptions);
   }
 
