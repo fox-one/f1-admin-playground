@@ -1,5 +1,5 @@
 import { handleRequestError } from '@/utils/request';
-import { Admin } from 'f1-passport';
+import { Admin } from '@foxone/passport';
 import constants from '../constants';
 
 const admin = new Admin({

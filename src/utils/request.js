@@ -3,7 +3,7 @@ import { notification } from 'antd';
 import hash from 'hash.js';
 import { formatMessage } from 'umi/locale';
 import router from 'umi/router';
-import { generateSignRequest, generateToken } from 'f1-passport';
+import { generateSignRequest, generateToken } from '@foxone/passport';
 import { getSession } from './authority';
 
 function getQueryString(params) {
@@ -73,7 +73,7 @@ async function signAndRequest(session, url, options) {
 
 export function handleRequestError(e) {
   const status = e.name;
-  
+
   if (status === 'TypeError') {
     const error = new Error('服务不可用');
     error.name = '服务不可用，服务器暂时过载或正在维护。';
